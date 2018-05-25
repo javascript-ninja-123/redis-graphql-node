@@ -3,7 +3,19 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   name:{type:String},
-  email:{type:String}
+  email:{type:String},
+  friends:[
+    {
+      type:Schema.Types.ObjectId,
+      ref:'Friend'
+    }
+  ],
+  haters:[
+    {
+      type:Schema.Types.ObjectId,
+      ref:"Hater"
+    }
+  ]
 });
 
 

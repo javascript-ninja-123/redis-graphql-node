@@ -6,6 +6,7 @@ import MyGraphQLSchema from './schema/schema'
 //mognoose
 import mongoose from 'mongoose';
 import './models/user';
+import './services/cache';
 
 
 import client from './redis';

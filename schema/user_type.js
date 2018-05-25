@@ -13,15 +13,16 @@ const userType = new GraphQLObjectType({
       email:{type: GraphQLString},
       friends:{
         type:new GraphQLList(friendType),
-        async resolve({_id},args){
-          const res = await Friend.find({userId:_id})
-          return res;
+        async resolve({_id},args,{client}){
+          const cache = new client({model:Friend,id:_id})
+          return cache.fetch()
         }
       },
       haters:{
         type:new GraphQLList(haterType),
-        async resolve({_id},args){
-          return await Hater.find({userId:_id})
+        async resolve({_id},args,{client}){
+          const cache = new client({model:Hater,id:_id})
+          return cache.fetch()
         }
       }
     }

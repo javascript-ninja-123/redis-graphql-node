@@ -15,7 +15,7 @@ const userMutation = new GraphQLObjectType({
         name:{type:GraphQLString},
         email:{type: GraphQLString}
       },
-      async resolve(parentValue,{name,email},{client}){
+      async resolve(parentValue,{name,email}){
         try{
           const user = new User({name,email});
           return user.save();
@@ -32,9 +32,11 @@ const userMutation = new GraphQLObjectType({
         email:{type: GraphQLString},
         userId:{type: GraphQLID}
       },
-      async resolve(parentValue,{name,email,userId}){
+      async resolve(parentValue,{name,email,userId},{client}){
         try{
           const friend = new Friend({name,email,userId});
+          const cache = new client({model:Friend,id:userId})
+          await cache.refreshCache()
           return friend.save()
         }
         catch(err){
@@ -49,9 +51,11 @@ const userMutation = new GraphQLObjectType({
         email:{type: GraphQLString},
         userId:{type: GraphQLID}
       },
-      async resolve(parentValue,args){
+      async resolve(parentValue,args,{client}){
         try{
           const hater = new Hater(args);
+          const cache = new client({model:Hater,id:args.userId})
+          await cache.refreshCache()
           return hater.save()
         }
         catch(err){

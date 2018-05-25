@@ -13,18 +13,9 @@ const rootType = new GraphQLObjectType({
       getUser:{
         type:userType,
         args:{_id:{type: new GraphQLNonNull(GraphQLID)}},
-        async resolve(parentValue,{_id},{client}){
+        async resolve(parentValue,{_id}){
           try{
-            const cachedUser = await client.getAsync(_id);
-            //if it is cached
-            if(cachedUser){
-              console.log('serving from cache')
-              return JSON.parse(cachedUser)
-            }
-            //if it is not cached
-            console.log('serving from mongodb')
             const user = await User.findById(_id);
-            client.set(_id,JSON.stringify(user));
             return user;
           }
           catch(err){

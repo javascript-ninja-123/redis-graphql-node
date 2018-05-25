@@ -8,8 +8,7 @@ import mongoose from 'mongoose';
 import './models/user';
 import './services/cache';
 
-
-import client from './redis';
+import client from './services/cache';
 import {MONGO_URL} from './config/secret';
 const app = express();
 

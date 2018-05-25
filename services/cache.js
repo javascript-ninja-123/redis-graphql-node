@@ -32,8 +32,11 @@ class cacheCenter{
       return null
     }
   }
-  async refreshCache(){
+  async refreshCacheAndSave(data){
+    const newData = new this.model(data);
+    const savedData = await newData.save();
     await this.client.del(this.hashKey);
+    return savedData;
   }
 }
 

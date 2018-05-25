@@ -9,7 +9,7 @@ import './models/user';
 import './services/cache';
 
 import client from './services/cache';
-import {MONGO_URL} from './config/secret';
+import {MONGO_URL} from './config/env';
 const app = express();
 
 mongoose.connect(MONGO_URL).then(() => console.log('mlab connected'))

@@ -34,10 +34,8 @@ const userMutation = new GraphQLObjectType({
       },
       async resolve(parentValue,{name,email,userId},{client}){
         try{
-          const friend = new Friend({name,email,userId});
           const cache = new client({model:Friend,id:userId})
-          await cache.refreshCache()
-          return friend.save()
+          return cache.refreshCacheAndSave({name,email,userId})
         }
         catch(err){
           return null;
@@ -53,10 +51,8 @@ const userMutation = new GraphQLObjectType({
       },
       async resolve(parentValue,args,{client}){
         try{
-          const hater = new Hater(args);
-          const cache = new client({model:Hater,id:args.userId})
-          await cache.refreshCache()
-          return hater.save()
+          const cache = new client({model:Hater,id:userId})
+          return cache.refreshCacheAndSave({name,email,userId})
         }
         catch(err){
           return null;
